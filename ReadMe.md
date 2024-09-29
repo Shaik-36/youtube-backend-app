@@ -50,10 +50,15 @@ Create a folder DB, keep all code in here. ANd import this function in index.js 
 
 ----------------------------------------------------------------------
 
-Important Dependencies
------------------------------------------------------------------------
--> npm install mongoose express dotenv
-=======================================================================
+## Important Dependencies
+
+
+-------------------------------------
+
+npm install mongoose express dotenv
+
+-------------------------------------
+
 
 -> Go to index.js
 
@@ -61,6 +66,8 @@ Important Dependencies
 
 # Approach - 1 - Connecting to Database
 
+
+-------------------------------------------------------------------
 import express from "express"
 const app = express()
 
@@ -84,7 +91,7 @@ const app = express()
     }
 })()
 
-
+------------------------------------------------------------------
 
 
 # Approach - 2 - Write the code in a DB file and then import it here
@@ -93,8 +100,11 @@ const app = express()
 
 -> Get url from database connect
 
+----------------------------------
+
 mongodb+srv://imamshan369:<db_password>@cluster0.bwjho.mongodb.net/
 
+----------------------------------
 
 
  #   Custom API response and error Handling
