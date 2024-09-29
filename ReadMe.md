@@ -9,6 +9,19 @@ And some Production level Packages : Multer, Mongoose-aggregate-paginate-v2, cor
 We will see the step by step process of creating this complex Project
 
 
+# Dependencies
+
+-> bcrypt
+-> cloudinary
+-> cookie-parser
+-> cors
+-> dotenv
+-> express
+-> jsonwebtoken
+-> mongoose
+-> mongoose-aggregate-paginate-v2
+-> multer
+
 # Create database in MongoDB Atlas
 
 
@@ -46,8 +59,8 @@ Important Dependencies
 
 
 
-/*  Approach - 1 - Connecting to Database
-//--------------------------------------------------------------------------
+# Approach - 1 - Connecting to Database
+
 import express from "express"
 const app = express()
 
@@ -72,25 +85,19 @@ const app = express()
 })()
 
 
-*/
 
- Approach - 2 - Write the code in a DB file and then import it here
-====================================================================================
+
+# Approach - 2 - Write the code in a DB file and then import it here
 
 -> GO to DB/
-
-
-
-
-
 
 -> Get url from database connect
 
 mongodb+srv://imamshan369:<db_password>@cluster0.bwjho.mongodb.net/
 
 
-====================================================================================
-    Custom API response and error Handling
+
+ #   Custom API response and error Handling
 ====================================================================================
 
 -> in Utils
@@ -100,14 +107,14 @@ mongodb+srv://imamshan369:<db_password>@cluster0.bwjho.mongodb.net/
 The code defines a function asyncHandler that wraps asynchronous Express.js route handlers to automatically pass any errors they throw to the error-handling middleware.
 
 
-====================================================================================
-    API error Handling
+
+#    API error Handling
 ====================================================================================
 
 -> In utils
 -> create apiErrors.js
 
--------------------------------------------------------------------------------------
+
 In Node.js, API errors typically refer to problems that occur when a client (such as a web browser or mobile app) makes a request to a server, and something goes wrong in the process. These errors can be caused by various issues, and understanding them involves knowing a bit about how APIs (Application Programming Interfaces) and error handling work.
 
 Here’s a breakdown of what API errors might involve:
@@ -162,16 +169,16 @@ Consistent Error Format: Define a consistent format for error responses to make 
 Detailed Error Messages: Provide enough information for debugging but avoid exposing sensitive information.
 Rate Limiting and Throttling: Implement rate limiting to prevent abuse and ensure your server can handle the load.
 By understanding and handling API errors effectively, you can improve the reliability and user experience of your Node.js applications.
---------------------------------------------------------------------------------------------------------
 
 
-====================================================================================
-    API  Response
+
+
+#    API  Response
 ====================================================================================
 
 -> In Utils/ApiResponse.js
 
--------------------------------------------------------------------------------------
+
 
 HTTP response status codes indicate whether a specific HTTP request has been successfully completed. Responses are grouped in five classes:
 
@@ -181,10 +188,10 @@ Redirection messages (300 – 399)
 Client error responses (400 – 499)
 Server error responses (500 – 599)
 
------------------------------------------------------------------------
 
-====================================================================================
-    User and Video model with Hooks and JWT, decrypt
+
+
+#   User and Video model with Hooks and JWT, decrypt
 ====================================================================================
 
 -> Go to folder src/models
@@ -195,16 +202,19 @@ Server error responses (500 – 599)
 ------------------------------------------------------
         mongoose-aggregate paginate-v2
 ------------------------------------------------------
-// Aggregation Queries - mongoose
+
+
+Aggregation Queries - mongoose
+
 videoSchema.plugin(mongooseAggregatePaginate)
 
-------------------------------------------------------
-        bcrypt and JWT
-------------------------------------------------------
+
+#        bcrypt and JWT
+=========================================
 
 
-------------------------------------------------------
-        Middleware - Pre Hook using bcrypt
+
+#       Middleware - Pre Hook using bcrypt
 ------------------------------------------------------
 
 userSchema.pre("save", async function (next) {
@@ -214,11 +224,13 @@ userSchema.pre("save", async function (next) {
 
     next()
 })
+------------------------------------------------------
 
 
-------------------------------------------------------
-        Custom methods in mongoose
-------------------------------------------------------
+
+
+#        Custom methods in mongoose
+======================================================
 
 //  Custom methods from mongoose - To check password is correct or not
 userSchema.methods.isPasswordCorrect = async function (password) {
@@ -226,16 +238,17 @@ userSchema.methods.isPasswordCorrect = async function (password) {
 }
 
 
-------------------------------------------------------
-        JWT
-------------------------------------------------------
+
+ #       JWT
+======================================================
 
 JWT is a bearer token - which mean who bears (hols/have) the token they will be true and the data will be sent.
 
-------------------------------------------------------
-        Define env variables 
-------------------------------------------------------
 
+#        Define env variables 
+=========================================================
+
+-----------------------------------------
 PORT=8000
 MONGODB_URI=
 CORS_ORIGIN=*
@@ -243,10 +256,10 @@ ACCESS_TOKEN_SECRET=
 ACCESS_TOKEN_EXPIRY=1d
 REFRESH_TOKEN_SECRET=
 REFRESH_TOKEN_EXPIRY=10d
+------------------------------------------
 
 
-====================================================================================
-    User and Video model with Hooks and JWT, decrypt
+#    User and Video model with Hooks and JWT, decrypt
 ====================================================================================
 
 
@@ -273,9 +286,9 @@ REFRESH_TOKEN_EXPIRY=10d
 -> Middleware job is before leving meet me and go
 
 
-------------------------------------------------------
-        Cloudinary
-------------------------------------------------------
+
+#       Cloudinary
+==============================================================
 
 Cloudinary is a cloud-based service that allows users to manage images and videos for websites and apps. 
 
@@ -295,7 +308,9 @@ Workflow automation: Cloudinary offers workflow automation to boost operational 
 
 Real-time video transcoding: Cloudinary's video API offers real-time video transcoding. 
 
-------------------------------------------------------------------------------------------------
+
+# Use of Multer and Cloudinary
+=============================================
 
 -> we use multer - to upload the file and save it in local server for temporary
 
@@ -303,11 +318,11 @@ Real-time video transcoding: Cloudinary's video API offers real-time video trans
 
 -> The reason is to save the file in local server if it failed to upload we can reupload the file.
 
--------------------------------------------------------------------------------------------------
 
--------------------------------------------------
-    Code for Cloudinary 
--------------------------------------------------
+
+
+#   Code for Cloudinary 
+==========================================================
 
 -> Go to Utils ( you can save in a folder called service)
 
@@ -319,31 +334,42 @@ Real-time video transcoding: Cloudinary's video API offers real-time video trans
 
 -> Once the file is uploaded successfully then we remove the file from our local server.
 
--------------------------------------------------
-    Node js File System 
--------------------------------------------------
 
-->  https://nodejs.org/api/fs.html
+
+#    Node js File System 
+=====================================================================
+
+-----------------------------------------------------------------
+
+-> https://nodejs.org/api/fs.html
+
 
 -> fsPromise.unlink(path) - delete file - this is the terminology used in files system
 
-// Configuration of Cloudinary API Keys
+---------------------------------------------------------------
+
+
+# Configuration of Cloudinary API Keys
+==============================================
+------------------------------------------
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
     api_key: process.env.CLOUDINARY_API_KEY, 
     api_secret: process.env.CLOUDINARY_API_SECRET 
 });
+--------------------------------------------
 
 
------------------------------------------------------------------------------------
 
-// Uploading files to Cloudinary using the localFilePath from the local server
+# Uploading files to Cloudinary using the localFilePath from the local server
+======================================================================================
+
 const uploadOnCloudinary = async (localFilePath) => {}
 
 
--------------------------------------------------
-    Creating Multer - As a Middleware
--------------------------------------------------
+
+#   Creating Multer - As a Middleware
+=======================================================================================
 
 -> We use multer as middleware to check for every api if they require any upload then multer will come into picture and then uplaod
 -> Meet me before you leave - middleware
@@ -355,6 +381,8 @@ const uploadOnCloudinary = async (localFilePath) => {}
 -> DiskStorage
     The disk storage engine gives you full control on storing files to disk.
 
+-----------------------------------------------
+
 const storage = multer.diskStorage({
 
     // Destination fo the file
@@ -363,6 +391,8 @@ const storage = multer.diskStorage({
 
   })
   
+-------------------------------------------------
+
 -> You can make updates in SETTING  file name in future
 
 
