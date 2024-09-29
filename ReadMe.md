@@ -76,8 +76,7 @@ const app = express()
         await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
         app.on("error", () => {
             console.log("ERROR", error);
-            throw error
-            
+            throw error       
         })
 
         app.listen(process.env.PORT, () => {
@@ -911,12 +910,45 @@ We will see step by step how we built this app
 -> We also learned about if we want data from another model ( like from videos to users model) using aggregation pipeline (where we joined the different tables)
 
 
-=======================================================================
 
-       MongoDB models for like playlist and tweet
+#       MongoDB models for like playlist and tweet
 
-=======================================================================
 
 -> Here we build the models of videos and tweets and then likes and comments section as well.
+
+-> Open Terminal (Git Bash)
+
+----------------------------------------------------------
+touch   comment.model.js   like.model.js   playlist.model.js   tweet.mode.js
+----------------------------------------------------------
+
+# comments model file
+
+
+We import mongoose, Schema and mongooseAggregatePaginate
+
+
+Create a new function called commentSchema and add the plugin(mongooseAggregatePaginate) to it to paginate
+
+# like model file
+
+Here we need to declare comment, createdAt, video, updatedAt, video, likedBy, tweet
+
+
+# playlist model file
+
+Here we need name, description, createdAt, updatedAt, videos, owner
+
+# tweet model file
+
+This model we created a for an extension to the youtube backend 
+
+Here we need owner, content, createdAt, updatedAt
+
+
+
+
+
+
 
 
