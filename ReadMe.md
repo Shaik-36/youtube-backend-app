@@ -1,6 +1,6 @@
 # A Youtube Backend Project
 
-This is a complex Backend Project for Youtube on backend with javascript
+This is a Backend Project for Youtube on backend with javascript
 
 Here we used Node.js, Express.js, MongoDB
 
